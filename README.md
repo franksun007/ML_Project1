@@ -20,5 +20,8 @@ latex-example-paper/
 project1_description.pdf        
 scripts/
 ```
+# Code and Report
+Report will be located in folder ```report/report.pdf```
 
+Code will be in python and is located at ```src/python/```
 
