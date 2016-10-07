@@ -25,3 +25,11 @@ Report will be located in folder ```report/report.pdf```
 
 Code will be in python and is located at ```src/python/```
 
+# Data
+Data is in ```data/```
+
+There are three files in that directory. All data is from CERN for competition at Kaggle. The data is downloaded from [here](https://inclass.kaggle.com/c/epfml-project-1/data)
+
+The files are managed by git-lfs, please refer to [this](https://git-lfs.github.com/)
+
+
