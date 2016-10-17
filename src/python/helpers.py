@@ -14,7 +14,6 @@ def standardize(x, mean_x=None, std_x=None):
     tx = np.hstack((np.ones((x.shape[0],1)), x))
     return tx, mean_x, std_x
 
-
 def batch_iter(y, tx, batch_size, num_batches=None, shuffle=True):
     """
     Generate a minibatch iterator for a dataset.
@@ -44,3 +43,19 @@ def batch_iter(y, tx, batch_size, num_batches=None, shuffle=True):
         end_index = min((batch_num + 1) * batch_size, data_size)
         if start_index != end_index:
             yield shuffled_y[start_index:end_index], shuffled_tx[start_index:end_index]
+
+
+def split_data(x, y, ratio, seed=1):
+    """split the dataset based on the split ratio."""
+    # set seed
+    np.random.seed(seed)
+    # split the data based on the given ratio:
+
+    num_row = len(y)
+    interval = int(num_row * ratio)
+    indicies = np.random.permutation(num_row)
+    x_train = x[indicies][: interval]
+    y_train = y[indicies][: interval]
+    x_test = x[indicies][interval:]
+    y_test = y[indicies][interval:]
+    return x_train, y_train, x_test, y_test
