@@ -15,16 +15,6 @@ import numpy as np
 from src.python.helpers import batch_iter
 
 
-def compute_mse(y, tx, w):
-    """
-    Calculate the mse.
-    """
-    # compute loss by MSE / MAE
-    N = len(y)
-    e = y - np.dot(tx, w)
-    return  1.0 / 2 / N * np.dot(e.T, e)
-
-
 def compute_gradient(y, tx, w):
     """Compute the gradient."""
     e = y - np.dot(tx, w)
@@ -67,12 +57,12 @@ def stochastic_gradient_descent(
     return w
 
 
-# Reference to gradient_descent function
+# Refer to gradient_descent function
 def least_squares_gd(y, tx, gamma, max_iters):
     return 0
 
 
-# Reference to stochastic_gradient_descent function
+# Refer to stochastic_gradient_descent function
 def least_squares_sgd(y, tx, gamma, max_iters):
     return 0
 
