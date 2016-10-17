@@ -35,20 +35,14 @@ def compute_gradient(y, tx, w):
 def gradient_descent(y, tx, initial_w, max_iters, gamma):
     """Gradient descent algorithm."""
     # Define parameters to store w and loss
-    ws = [initial_w]
-    losses = []
     w = initial_w
     for n_iter in range(max_iters):
         # compute gradient and loss
-        loss = compute_mse(y, tx, w)
         gradient = compute_gradient(y, tx, w)
         # update w by gradient
         w = w - gamma * gradient
-
         # store w and loss
-        ws.append(np.copy(w))
-        losses.append(loss)
-    return losses, ws
+    return w
 
 
 def compute_stoch_gradient(y, tx, w):
@@ -63,22 +57,14 @@ def stochastic_gradient_descent(
     """Stochastic gradient descent algorithm."""
 
     # Define parameters to store w and loss
-    ws = [initial_w]
-    losses = []
     w = initial_w
     for n_iter in range(max_epochs):
         # compute gradient and mse
         for minibatch_y, minibatch_tx in batch_iter(y, tx, batch_size):
-            loss = compute_mse(minibatch_y, minibatch_tx, w)
             gradient = compute_stoch_gradient(minibatch_y, minibatch_tx, w)
             # update w by gradient
             w = w - gamma * gradient
-
-        # store w and loss
-        ws.append(np.copy(w))
-        losses.append(loss)
-
-    return losses, ws
+    return w
 
 
 # Reference to gradient_descent function
@@ -101,7 +87,19 @@ def ridge_regression(y, tx, lambda_):
     return np.linalg.solve(tx.T @ tx + lambda_ * i, tx.T @ y)
 
 
+# Aiming to return the negative of the value of log-likelihood
+def compute_cost_logistic_regression(w_guess, y, tx):
+    nll = np.log(1 + np.exp(-y @ w_guess.T @ tx))
+    return nll
+
+
+# Return the corresponding gradient
+def compute_gradient_logistic_regression(w_guess, y, tx, gamma):
+    return 0
+
+
 def logistic_regression(y, tx, gamma, max_iters):
+
     return 0
 
 
