@@ -9,10 +9,10 @@ def compute_gradient(y, tx, w):
     return (-1 / N) * np.dot(tx.T, e)
 
 
-def gradient_descent(y, tx, initial_w, max_iters, gamma):
+def least_squares_gd(y, tx, max_iters, gamma):
     """Gradient descent algorithm."""
     # Define parameters to store w and loss
-    w = initial_w
+    w = np.zeros(tx.shape[1])
     for n_iter in range(max_iters):
         gradient = compute_gradient(y, tx, w)
         w -= gamma * gradient
