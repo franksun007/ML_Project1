@@ -1,7 +1,7 @@
 import numpy as np
 
-from ./src.python import costs
-from ./src.python import helpers
+from ./src.python.costs import *
+from ./src.python.helpers import *
 
 def compute_stoch_gradient(y, tx, w):
     """Compute a stochastic gradient for batch data."""
