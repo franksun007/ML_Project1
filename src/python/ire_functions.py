@@ -11,10 +11,19 @@ def compute_gradient(y, tx, w):
 
 def least_squares_gd(y, tx, max_iters, gamma):
     """Gradient descent algorithm."""
-    # Define parameters to store w and loss
     w = np.zeros(tx.shape[1])
     for n_iter in range(max_iters):
         gradient = compute_gradient(y, tx, w)
+        w -= gamma * gradient
+
+    return w
+
+
+def least_squares_sgd(y, tx, max_iters, gamma):
+    """Stochastic gradient descent algorithm."""
+    w = np.zeros(tx.shape[1])
+    for minibatch_y, minibatch_tx in batch_iter(y, tx, 42):  # TODO: choose batch size
+        gradient = compute_gradient(minibatch_y, minibatch_tx, w)
         w -= gamma * gradient
 
     return w
