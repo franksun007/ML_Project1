@@ -8,33 +8,27 @@ def sigmoid(t):
 
 def calculate_loss_logistic_regression(y, tx, w):
     """compute the cost by negative log likelihood."""
+
     prediction = sigmoid(tx @ w)
-    prediction[np.where(y == 1)] = y[np.where(y == 1)] * np.log(prediction[np.where(y == 1)])
-    prediction[np.where(y == 0)] = y[np.where(y == 0)] * np.log(1 - prediction[np.where(y == 0)])
+
+    for i in range(len(y)):
+        prediction[i] = np.log(prediction[i]) if y[i] == 1 else np.log(1 - prediction[i])
+
     return -np.sum(prediction)
 
 
 def calculate_gradient_logistic_regression(y, tx, w):
     """compute the gradient of loss."""
-    return tx.T @ (sigmoid(tx @ w) - y)
-
-
-def calculate_hessian_logistic_regression(y, tx, w):
-    """return the hessian of the loss function."""
-    # ***************************************************
-    # INSERT YOUR CODE HERE
-    # calculate hessian: TODO
-    # ***************************************************
-    Snn = (sigmoid(tx @ w) * (1 - sigmoid(tx @ w)))
-    Snn = Snn.reshape(Snn.shape[0])
-    S = np.diag(Snn)
-    return tx.T @ S @ tx
+    sig = sigmoid(tx @ w)
+    minus = [sig[i] - y[i] for i in range(len(sig))]
+    dot = tx.T @ minus
+    return dot
 
 
 def logistic_regression_helper(y, tx, gamma, max_iters, lambda_):
     w = np.zeros((tx.shape[1], 1))
     threshold = 1e-8
-    losses = []
+    loss_prev = 0
     for iter in range(max_iters):
         """
         Do one step of gradient descent using logistic regression.
@@ -44,11 +38,13 @@ def logistic_regression_helper(y, tx, gamma, max_iters, lambda_):
         # else it's the penalized version of logistic regression
         loss = calculate_loss_logistic_regression(y, tx, w) + lambda_ * np.linalg.norm(w, 2)
         gradient = calculate_gradient_logistic_regression(y, tx, w)
-        hessian = calculate_hessian_logistic_regression(y, tx, w)
-        w -= np.linalg.solve(hessian, gradient) * gamma
-        losses.append(loss)
-        if len(losses) > 1 and np.abs(losses[-1] - losses[-2]) < threshold:
+        w -= gradient * gamma
+        if iter % 1000 == 0:
+            print("Current iteration={i}, the loss={l}".format(i=iter, l=loss))
+
+        if (loss_prev != 0) and np.abs(loss_prev - loss) < threshold:
             break
+        loss_prev = loss
     return w
 
 
