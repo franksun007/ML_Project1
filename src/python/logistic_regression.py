@@ -57,6 +57,6 @@ def logistic_regression(y, tx, gamma, max_iters):
     return logistic_regression_helper(y, tx, gamma, max_iters, lambda_=0)
 
 
-def reg_logistic_regression(y, tx, lambda_,gamma, max_iters):
+def reg_logistic_regression(y, tx, lambda_, gamma, max_iters):
     """ return the final w from the penalized logistic regression, with lambda_ as a non 0 value"""
     return logistic_regression_helper(y, tx, gamma, max_iters, lambda_)
