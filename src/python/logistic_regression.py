@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def sigmoid(t):
     """apply sigmoid function on t."""
     return 1.0 / (1.0 + np.exp(-t))
@@ -30,17 +31,18 @@ def calculate_hessian_logistic_regression(y, tx, w):
     return tx.T @ S @ tx
 
 
-def logistic_regression(y, tx, gamma, max_iters):
+def logistic_regression_helper(y, tx, gamma, max_iters, lambda_):
     w = np.zeros((tx.shape[1], 1))
     threshold = 1e-8
     losses = []
-
     for iter in range(max_iters):
         """
-        Do one step of gradient descen using logistic regression.
+        Do one step of gradient descent using logistic regression.
         Return the loss and the updated w.
         """
-        loss = calculate_loss_logistic_regression(y, tx, w)
+        # If lambda_ is 0 then it's the loss function of logistic regression without penalty
+        # else it's the penalized version of logistic regression
+        loss = calculate_loss_logistic_regression(y, tx, w) + lambda_ * np.linalg.norm(w, 2)
         gradient = calculate_gradient_logistic_regression(y, tx, w)
         hessian = calculate_hessian_logistic_regression(y, tx, w)
         w -= np.linalg.solve(hessian, gradient) * gamma
@@ -50,20 +52,11 @@ def logistic_regression(y, tx, gamma, max_iters):
     return w
 
 
-def calculate_loss_penalized_logistic_regression(y, tx, w, lambda_):
-    return calculate_loss_logistic_regression(y, tx, w) + lambda_ * np.linalg.norm(w, 2)
+def logistic_regression(y, tx, gamma, max_iters):
+    """ return the final w from the logistic regression """
+    return logistic_regression_helper(y, tx, gamma, max_iters, lambda_=0)
 
 
 def reg_logistic_regression(y, tx, lambda_,gamma, max_iters):
-    w = np.zeros((tx.shape[1], 1))
-    threshold = 1e-8
-    losses = []
-    for iter in range(max_iters):
-        loss = calculate_loss_penalized_logistic_regression(y, tx, w, lambda_)
-        gradient = calculate_gradient_logistic_regression(y, tx, w)
-        hessian = calculate_hessian_logistic_regression(y, tx, w)
-        w -= np.linalg.solve(hessian, gradient) * gamma
-        losses.append(loss)
-        if len(losses) > 1 and np.abs(losses[-1] - losses[-2]) < threshold:
-            break
-    return w
+    """ return the final w from the penalized logistic regression, with lambda_ as a non 0 value"""
+    return logistic_regression_helper(y, tx, gamma, max_iters, lambda_)
