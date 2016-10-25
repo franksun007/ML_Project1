@@ -61,3 +61,11 @@ def split_data(x, y, ratio, seed=1):
     x_test = x[indicies][interval:]
     y_test = y[indicies][interval:]
     return x_train, y_train, x_test, y_test
+
+
+def performance(weights, y, xT):
+    """Returns the percentage of successful classifications for the weights,
+    given the expected results (y) and data (xT)"""
+    from proj1_helpers import predict_labels
+    compare_pred = predict_labels(weights, xT) - y
+    return 1 - np.count_nonzero(compare_pred) / compare_pred.size
