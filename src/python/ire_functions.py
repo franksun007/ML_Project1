@@ -1,6 +1,6 @@
 import numpy as np
-from src.python.costs import *
-from src.python.helpers import *
+from costs import *
+from helpers import *
 
 def compute_gradient(y, tx, w):
     """Compute the gradient."""
