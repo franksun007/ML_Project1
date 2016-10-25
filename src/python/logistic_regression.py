@@ -70,6 +70,9 @@ def logistic_regression_helper(y, tx, gamma, max_iters, lambda_):
         if (loss_prev != 0) and np.abs(loss_prev - loss) < threshold:
             break
 
+        if (iter % 5000) == 0:
+            print(w)
+
         loss_prev = loss
 
     return w

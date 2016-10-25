@@ -16,17 +16,17 @@ gammas = np.arange(0.01, 0.1, 0.01)
 
 # When lambda is 0, reg_logistic_regression is naive non-penalized logistic_regression.
 
-struct = dict()
-for lambda_ in lambdas:
-    for gamma in gammas:
-        w = reg_logistic_regression(y, tX, lambda_, gamma, max_iter)
-        print("finished the regression")
-        err = compute_loss(y, tX, w)
-        print("finished the error")
-        struct[(gamma, lambda_)] = (w, err)
-        break
+max_iter = 20000
+lambdas = np.arange(0.1, 0.4, 0.1)
+gammas = np.arange(0.001, 0.01, 0.001)
 
-for (gamma, lambda_), (w, err) in struct.items():
-    print("Gamma: ", gamma, " Lamdba: ", lambda_, " w: ", w, "error: ", err)
+# When lambda is 0, reg_logistic_regression is naive non-penalized logistic_regression.
 
+
+weights = reg_logistic_regression(y, tX, lambdas[0], gammas[0], max_iter)
+# err = compute_loss(y, tX, w)
+# struct[(gamma, lambda_)] = (w, err)
+# #         break
+# for (gamma, lambda_), (w, err) in struct.items():
+#     print("Gamma: ", gamma, " Lamdba: ", lambda_, " w: ", w, "error: ", err)
 
