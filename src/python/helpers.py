@@ -3,6 +3,7 @@
 import numpy as np
 
 
+# THIS FUNCTION HAS BEEN MODIFIED
 def standardize(x, mean_x=None, std_x=None):
     """Standardize the original data set."""
 
@@ -12,15 +13,16 @@ def standardize(x, mean_x=None, std_x=None):
         neg = np.where(x[i] == -999)
         counter[neg] += 1
 
+    pos = np.where(counter > x.shape[0] * 0.5)
+
+    for i in range(len(x)):
+        x[np.where(x[i][pos] == -999)] = 0
+
 
     if mean_x is None:
         mean_x = np.mean(x, axis=0)
     x = x - mean_x
 
-    pos = np.where(counter > x.shape[0] * 0.5)
-
-    for i in range(len(x)):
-        x[i][pos] = 0
 
     if std_x is None:
         std_x = np.std(x, axis=0)
