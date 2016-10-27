@@ -39,8 +39,13 @@ def calculate_gradient_logistic_regression(y, tx, w):
     return tx.T @ sig
 
 
-def logistic_regression_helper(y, tx, gamma, max_iters, lambda_):
-    w = np.zeros((tx.shape[1], 1))
+def logistic_regression_helper(y, tx, gamma, max_iters, lambda_, tX_ori, y_ori, init_w):
+    if init_w is None:
+        w = np.zeros((tx.shape[1], 1))
+    else:
+        w = init_w
+
+    w = w.reshape(np.zeros((tx.shape[1], 1)).shape)
 
     w_max = w
     performance = 0
@@ -68,8 +73,8 @@ def logistic_regression_helper(y, tx, gamma, max_iters, lambda_):
         loss_prev = loss
 
         if (iter % 10) == 0:
-            compare_pred = predict_labels(w, tx)
-            compare_pred -= y.reshape([len(y), 1])
+            compare_pred = predict_labels(w, tX_ori)
+            compare_pred -= y_ori.reshape([len(y_ori), 1])
             nonzero = 0
             for j in range(len(compare_pred)):
                 if (compare_pred[j] != 0):
@@ -101,6 +106,6 @@ def logistic_regression(y, tx, gamma, max_iters):
     return logistic_regression_helper(y, tx, gamma, max_iters, lambda_=0)
 
 
-def reg_logistic_regression(y, tx, lambda_, gamma, max_iters):
+def reg_logistic_regression(y, tx, lambda_, gamma, max_iters, tX_ori, y_ori, init_w=None):
     """ return the final w from the penalized logistic regression, with lambda_ as a non 0 value"""
-    return logistic_regression_helper(y, tx, gamma, max_iters, lambda_)
+    return logistic_regression_helper(y, tx, gamma, max_iters, lambda_, tX_ori, y_ori, init_w)
