@@ -3,15 +3,18 @@
 import numpy as np
 
 
+# THIS FUNCTION HAS BEEN MODIFIED
 def standardize(x, mean_x=None, std_x=None):
     """Standardize the original data set."""
     if mean_x is None:
         mean_x = np.mean(x, axis=0)
     x = x - mean_x
+
+
     if std_x is None:
         std_x = np.std(x, axis=0)
     x[:, std_x>0] = x[:, std_x > 0] / std_x[std_x > 0]
-    
+
     tx = x
     return tx, mean_x, std_x
 
@@ -26,6 +29,7 @@ def batch_iter(y, tx, batch_size, num_batches=None, shuffle=True):
     for minibatch_y, minibatch_tx in batch_iter(y, tx, 32):
         <DO-SOMETHING>
     """
+
     data_size = len(y)
     num_batches_max = int(np.ceil(data_size/batch_size))
     if num_batches is None:
