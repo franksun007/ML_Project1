@@ -16,11 +16,6 @@
 
 \maketitle
 
-\begin{abstract}
-TBW
-\end{abstract}
-
-
 \section{Introduction}
 
 This is the report for the EPFL Pattern Classification and Machine Learning course's first project: to observe the effect of the Higgs boson in some real datasets by using machine learning concepts learned in class. \\
@@ -30,10 +25,9 @@ The aim of the project was to build a binary classifier that predicts if each fe
 
 \subsection{ML techniques}
 
-We first implemented six machine learning methods (as per project description). Each of these methods creates a model using the training data available.
-% This way we could test them and The goal was to have a set of tools to be able to test them and select the best suited for our problem.
+We first implemented six machine learning methods. Each of these methods creates a model using the training data available.
 
-The first three functions minimise the Mean Square Error (MSE) cost function:
+The first four functions minimise the Mean Square Error (MSE) cost function:
 
 $$MSE(w) := \frac{1}{N}\sum\limits_{n=1}^N {[y_n - f(x_n)]}^2$$ \\
 
@@ -72,7 +66,7 @@ Ridge regression
 \item 
 Regularized logistic regression
 \end{itemize}
-The results across all three models consistently showed that a better classification result was found when using data with engineered features. \\
+The results across all three models consistently showed that a better classification result was found when using data with feature engineering. \\
 
 \subsubsection{Data splitting}
 After a close examination on the data, we observed that the \code{PRI\_jet\_num} feature only took 4 possible integer values.  Many other features depended directly on the value of \code{PRI\_jet\_num}. For instance, if \code{PRI\_jet\_num = 0}, then only 18 out of 30 features will be defined, and all others will be meaningless or undefined (0 or -999). \\
@@ -102,15 +96,7 @@ We decided to employ a naive way to define a dynamic Gamma value. Whenever the l
 Having a dynamic Gamma value gave us a better indication on how well we are doing, and helped us to find a solution that are relatively close to the exact result for logistic regression. 
 
 
-\section{Results}
-
-
-
-\section{Discussion}
-
-
-
-\section{Summary}
+\section{Conclusion}
 
 
 
