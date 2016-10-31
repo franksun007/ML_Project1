@@ -95,9 +95,13 @@ Another option was to do a work around using the Armijo Rule, which can work wel
 We decided to employ a naive way to define a dynamic Gamma value. Whenever the loss value was worse (larger) than in the previous step, Gamma was reduced to 2/3 of its previous value, to allow convergence. It might not be the optimal approach, but our implementation produced good results with regularised logistic regression.
 Having a dynamic Gamma value gave us a better indication on how well we are doing, and helped us to find a solution that are relatively close to the exact result for logistic regression. 
 
+\subsection{Validation}
+
+During the training of the model, we did not use cross-validation. We implemented a function that tested the model by predicting the values of the training data (which had been used to train the model) and comparing the success rate to the actual values. We saw that this method gave us the same scores as the kaggle website, it let us know that we weren't overfitting and we could use the whole training data to find the model, instead of splitting the data.
 
 \section{Conclusion}
 
-
+Even though our best score was obtained through ridge regression, for our final submission, we chose the regularized logistic regression. This method conceived for binary classification and has less risk of overfitting than ridge regression. \\
+In our tests, however, we saw no significant score differences from using the different methods. The biggest improvements came from feature engineering, and surely a better understanding of the physics related to the Higgs Boson would make it possible to improve the score even further, just through feature engineering. 
 
 \end{document}
