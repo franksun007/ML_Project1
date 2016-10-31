@@ -85,6 +85,7 @@ After the above feature selection, we normalise the data to be mean 0, standard 
 \subsubsection{Additional features}
 Besides altering the features originally included in the dataset, we conducted some experiments using additional calculated features as well. Specifically, we added new features such as the $\sin$ and $\tanh$ of the original features. However, these additional features didn't improve the prediction quality when tested. Thus, they were not used.
 
+\subsubsection{Polynomial expansion}
 We also applied polynomial expansion on the dataset. We tested various degrees (from 2 to 5) and we found that the 2nd order polynomial expansion gave the best prediction. Therefore, we used the 2nd order polynomial on the original data.
 
 Overall, our feature engineering efforts significantly improved our model. From a result perspective, they increased our prediction rate from 77\% to 81\%. These results reflect the efforts on Gamma search as well.
