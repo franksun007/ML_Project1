@@ -63,28 +63,43 @@ Here is a description of the implemented Machine Learning methods:
 
 \subsection{Feature processing}
 
-Besides model selections, feature engineering on the raw data is also a key part that contributes to a better classification result. A comparison was done for classification on raw data and feature engineered data, with respect to three models, least\_squares, ridge\_regression and reg\_logistic\_regression. The results across all three models showed that a better classification result could be found through feature engineered data. This section divides into three subsections: data splitting, standardising data, additional features.
+Besides model selections, feature engineering on the raw data is also a key part that contributes to a better classification result. We compared the classification results from some of the methods above on raw data and feature engineered data. We tested this using three models:
+\begin{itemize}
+\item
+ Least squares
+\item 
+Ridge regression
+\item 
+Regularized logistic regression
+\end{itemize}
+The results across all three models consistently showed that a better classification result was found when using data with engineered features. \\
 
 \subsubsection{Data splitting}
-After a close examination on the data, PRI\_jet\_num is a special feature that only contains 4 possible integer values. Besides, a lot of the features varies with respect to PRI\_jet\_num. For instance, if PRI\_jet\_num is 0, then only 18 features will be left while all others will either be 0 or -999, which are meaningless or undefined. Splitting the data with respect to this feature, and train different models accordingly seems like a good idea. The data is split into three parts, the first part is when PRI\_jet\_num equals 0, which the corresponding data is left with 18 useful features. The second part is when PRI\_jet\_num equals 1, which leaves 22 useful features. The final part contains PRI\_jet\_num with value either 2 or 3. After splitting the data, we choose to standardise the data first instead of go directly training them.
+After a close examination on the data, we observed that the \code{PRI\_jet\_num} feature only took 4 possible integer values.  Many other features depended directly on the value of \code{PRI\_jet\_num}. For instance, if \code{PRI\_jet\_num = 0}, then only 18 out of 30 features will be defined, and all others will be meaningless or undefined (0 or -999). \\
+Splitting the data with respect to this feature, and training different models accordingly proved to be a good idea. We split the data three parts:
+\begin{itemize}
+\item \code{PRI\_jet\_num = 0}: 18 meaningful features
+\item \code{PRI\_jet\_num = 1}: 22 meaningful features
+\item \code{PRI\_jet\_num = 2 or 3}: all features defined
+\end{itemize}
+After splitting the data, we choose to standardise the data first instead of go directly training them. \\
 
 \subsubsection{Data standardising}
-As mentioned above, since the training data is split into three parts, get rid of the useless features is considered as part of standardisation. Only meaningful features are kept. For instance, when PRI\_jet\_num is 0, only 18 features from the training set are kept. The combination of data splitting and standardisation reduce the amount of outliers (-999) in the overall training dataset. 
-After the above feature selection, we normalise the data to be mean 0, standard deviation 1. The mean is calculated without the outliers (-999). The outliers are filled with the mean. The standard deviation is normalised after the above two procedures.
+As mentioned above, since the training data is split into three parts, getting rid of the useless features is considered as part of standardization. Only meaningful features are kept. The combination of data splitting and standardisation reduce the amount of outliers (-999) in the overall training dataset. \\
+After the above feature selection, we normalise the data to be mean 0, standard deviation 1. The mean is calculated without the outliers (-999) and the outliers are replaced by the mean. The standard deviation is normalized after the above two procedures.
 
 \subsubsection{Additional features}
-Besides the original features that are included in the dataset, experiments is conducted using additional random features as well. Specifically, we add the sin and tanh operations on the original dataset as additional features, and trained afterwards. Experiments were conducted after the splitting and standardisation of the data. The result showed that the additional feature did not improve the quality of classification. Thus, the additional features experimented were not used.
+Besides altering the features originally included in the dataset, we conducted some experiments using additional calculated features as well. Specifically, we added new features such as the $\sin$ and $\tanh$ of the original features. However, these additional features didn't improve the prediction quality when tested. Thus, they were not used.
 
-Overall, only a limited feature engineering efforts were performed but better results were found. From a result perspective, we increased from 0.77 to 0.81 on the leaderboard with feature engineering. This also included efforts on Gamma search as well, which will be introduced in the next section.
-
+Overall, our feature engineering efforts significantly improved our model. From a result perspective, they increased our prediction rate from 77\% to 81\%. These results reflect the efforts on Gamma search as well.
 
 \subsection{Gamma search}
 
-Through our implementation and experiment, we found that the step size is a very important parameter through the training, especially with regularised logistic regression. If Gamma is too big, then the chance of converge is hard to tell, as the function might always go to the other side of the convex function. If Gamma is too small, then the convergence will definitely conduct, but the efficiency will be low. 
-Gamma problem can be solved with Newton’s method, as Newton’s method is considered as a complement to a fixed Gamma value. However, due to our data size, the step to compute the hessian is too memory consuming and takes too much time. Thus, Newton’s method is not used in the implementation. 
-A work around is using the Armijo Rule, which is a unsound mathematics theory but works well in practice. However, the Armijo Rule is easy to understand but hard to implement. Experiments were done with several versions of Armijo Rule implemented. None of them actually worked as expected. 
-Then we thought of a very naive way to achieve a dynamic Gamma value. Instead of using all those complicated algorithm, if the current loss value is larger than the previous loss value, then Gamma is reduced to be 2 / 3 or the current Gamma size. This method enforces the convergence. It might take some iterations to converge to a reasonable result, but our implementation found that this works the best with regularised logistic regression. We also tried to increase the speed of convergence by increasing Gamma, but it was not working as expected, as increasing Gamma to a reasonable value at any stage was different, which might influence the convergence a lot. Thus, increasing the Gamma was not used in our implementation.
-Dynamic Gamma value gives us a better indication on how well we are doing, as it helps us to find a solution that are relatively close to the exact result for logistic regression. 
+Through our implementation and experimentation, we observed that the step size is a crucial parameter for the training, especially when using regularised logistic regression. If Gamma was too big, the convergence would be insufficient for a good model, and small Gamma values meant expensive computations. \\
+The Gamma problem could be solved with Newton’s method, as Newton’s method is considered as a complement to a fixed Gamma value. However, due to the amount of data, computing the hessian needed too much memory and took too long. Thus, we didn't use Newton’s method in our implementation. \\
+Another option was to do a work around using the Armijo Rule, which can work well in practice. However, the implementation of Armijo Rule was no easy matter. Several tests were conducted, but none of them actually worked as expected or gave any significant improvement. \\
+We decided to employ a naive way to define a dynamic Gamma value. Whenever the loss value was worse (larger) than in the previous step, Gamma was reduced to 2/3 of its previous value, to allow convergence. It might not be the optimal approach, but our implementation produced good results with regularised logistic regression.
+Having a dynamic Gamma value gave us a better indication on how well we are doing, and helped us to find a solution that are relatively close to the exact result for logistic regression. 
 
 
 \section{Results}
