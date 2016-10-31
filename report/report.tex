@@ -42,7 +42,7 @@ Here is a description of the implemented Machine Learning methods:
 \begin{description}
 
 \item[Gradient descent] \ \\
-\code{least\_squares\_GD(y, tx, initial\_w, max\_iters, gamma):} this method is a simple gradient descent, i.e. at each step we adapt each weight to minimise the loss. This is done by computing the gradient of the MSE cost function, and then updating the weights by following it. We can tweak this method using the gamma parameter, which corresponds to the step size. With a large gamma, we risk to exceed the minimum, and then oscillate around it, but with a small gamma, the descent may be very slow, and then very long to compute.
+\code{least\_squares\_GD(y, tx, initial\_w, max\_iters, gamma):} This method is a simple gradient descent, i.e. at each step we adapt each weight to minimise the loss. This is done by computing the gradient of the MSE cost function, and then updating the weights by following it. We can tweak this method using the gamma parameter, which corresponds to the step size. With a large gamma, we risk to exceed the minimum, and then oscillate around it, but with a small gamma, the descent may be very slow, and then very long to compute.
 
 \item[Stochastic gradient descent] \ \\
 \code{least\_squares\_SGD(y, tx, initial\_w, max\_iters, gamma):} This method is very similar to the one above. Instead of calculating the gradient for every dimension, it is only calculated on one randomly chosen dimension. In expectation, we get the same gradient direction as the previous method, but for a much lower computational cost. This method, however can quite inefficient, so we chose to implement an intermediate version, which is the mini-batch SGD : rather than computing the gradient on all or just one dimensions, a random subset of dimensions is used. This way, the method is more efficient compared to the classic gradient descend and it is robust enough (depending on the size of the mini-batch).
@@ -51,13 +51,13 @@ Here is a description of the implemented Machine Learning methods:
 \code{least\_squares(y, tx):} This method implements the normal equation, which gives the optimal solution of the minimum loss: $$w^* = (X^{\top}X)^{-1}X^{\top}y$$
 
 \item[Ridge regression] \ \\
-\code{ridge\_regression(y, tx, lambda\_):}
+\code{ridge\_regression(y, tx, lambda\_):} This method is essentially like least squares except a weight is introduced into the equation to penalize complex models that could have a tendency to overfit.
 
 \item[Logistic regression] \ \\
-\code{logistic\_regression(y, tx, initial\_w, max\_iters, gamma):}
+\code{logistic\_regression(y, tx, initial\_w, max\_iters, gamma):} This method is designed for categorical classifications, e.g. a binary classification as is the case in this problem. The goal is reducing the loss from the cost function, to fit a logistic function in the data.
 
 \item[Regularised logistic regression] \ \\
-\code{reg\_logistic\_regression(y, tx, tambda\_, initial\_w, max\_iters, gamma):}
+\code{reg\_logistic\_regression(y, tx, tambda\_, initial\_w, max\_iters, gamma):} This method is essentially like the one above it, except it is penalized so that the weights do not tend to infinity when doing classifications that could be resolved linearly. 
 
 \end{description}
 
