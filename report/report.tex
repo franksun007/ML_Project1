@@ -100,7 +100,7 @@ Having a dynamic Gamma value gave us a better indication on how well we are doin
 
 \subsection{Validation}
 
-During the training of the model, we did not use cross-validation. We implemented a function that tested the model by predicting the values of the training data (which had been used to train the model) and comparing the success rate to the actual values. We saw that this method gave us the same scores as the kaggle website, it let us know that we weren't overfitting and we could use the whole training data to find the model, instead of splitting the data.
+During the training of the model, we did not use cross-validation. We implemented a function that tested the model by predicting the values of the training data (which had been used to train the model) and comparing the success rate to the actual values. We saw that this method gave us the same scores as the kaggle website. However, since we are doing evaluation on the training data, there is a potential that good result actually means our model overfits the data. Thus, we primarily used this model to see if we are doing something really off. 
 
 \section{Conclusion}
 
