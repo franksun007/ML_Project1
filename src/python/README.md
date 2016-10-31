@@ -7,7 +7,7 @@
 1. ```numpy``` lib
 2. ```proj1_helpers.py```
 
-```proj1_helpers.py``` should under the same folder as run.py
+```proj1_helpers.py``` should be under the same folder as run.py
 
 ## Input
 There are two input files for the program, one is the training dataset, 
