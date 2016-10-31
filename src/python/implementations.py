@@ -1,4 +1,4 @@
-'''
+"""
 Author: Group #23
             272785
             271691
@@ -23,7 +23,7 @@ logistic_regression(y, tx, initial_w, max_iters, gamma)
 
 reg_logistic_regression(y, tx, lambda_, initial_w, max_iters, gamma)
         Regularized_logistic_regression_using_gradient_descent
-'''
+"""
 
 import numpy as np
 from costs import *
@@ -39,6 +39,7 @@ def compute_loss_mem_aware(y, tx, w):
     """
     dot = tx.dot(w)
     e = y.reshape((len(y), 1)) - dot.reshape((len(y), 1))
+    # Located in the costs.py
     return calculate_mse(e)
 
 
@@ -130,7 +131,7 @@ def ridge_regression(y, tx, lambda_):
     i = np.eye(tx.shape[1])
     i[0][0] = 0  # Because we don't need to penalize the first term
     # Trying to find the result for (X.T @ X + lambda_ I)^(-1) @ (X.T @ y)
-                                    # penalized term
+    # lambda_ as penalized term
     w = np.linalg.solve(tx.T @ tx + lambda_ * i, tx.T @ y)
     return (w, compute_loss_mem_aware(y, tx, w))
 
@@ -139,6 +140,7 @@ def ridge_regression(y, tx, lambda_):
 
 # Constant to indicate +1 and 0 for classification
 BINARY_CLASSIFICATION_1 = 1
+
 
 def sigmoid(t):
     """apply sigmoid function on t."""
@@ -189,7 +191,7 @@ def logistic_regression_helper(y, tx, initial_w, max_iters, gamma, lambda_):
 
         # If converge
         if (loss_prev != 0 and loss != 0) and np.abs(loss_prev - loss) < threshold:
-            print("Reached Theshold, exit")
+            print("Reached Threshold, exit")
             break
 
         loss_prev = loss
@@ -200,11 +202,13 @@ def logistic_regression_helper(y, tx, initial_w, max_iters, gamma, lambda_):
 
 
 """
-    Logistic Regression and Regularized Logisitic Regression
+    Logistic Regression and Regularized Logistic Regression
     share the same core code. The only difference is that
     for logistic regression, lambda_, the regularization term
     is set to 0.
 """
+
+
 def logistic_regression(y, tx, intial_w, max_iters, gamma):
     """ return the final w from the logistic regression """
     """ Algorithm is using ** gradient descent ** """
