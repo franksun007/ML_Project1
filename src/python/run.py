@@ -15,7 +15,7 @@ WARNING: the we ran 40000 iterations and divided the dataset into three part,
 we trained using regularized logistic regression with gradient descent, which might
 be a little bit slow.
 
-The detailed description is in a seperate file called README.md
+The detailed description is in a separate file called README.md
 
 """
 
@@ -104,7 +104,7 @@ def logistic_regression_helper(y, tx, gamma, max_iters, lambda_):
 
         # If converge
         if (loss_prev != 0) and np.abs(loss_prev - loss) < threshold:
-            print("Reached Theshold, exit")
+            print("Reached Threshold, exit")
             break
 
         # Update gamma
@@ -118,11 +118,13 @@ def logistic_regression_helper(y, tx, gamma, max_iters, lambda_):
 
 
 """
-    Logistic Regression and Regularized Logisitic Regression
+    Logistic Regression and Regularized Logistic Regression
     share the same core code. The only difference is that
     for logistic regression, lambda_, the regularization term
     is set to 0.
 """
+
+
 # This function is not used
 def logistic_regression(y, tx, gamma, max_iters):
     """ return the final w from the logistic regression """
@@ -170,7 +172,7 @@ def standardize_0(x):
     """
     Standardize function for PRI_jet_num is 0
     Return a standardize version of the original feature, with
-    uselessful thrown away
+    useless features thrown away
     """
     # the features left that are meaningful and useful for training
     feature_left = np.array([0, 1, 2, 3, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20, 21])
@@ -183,7 +185,7 @@ def standardize_1(x):
     """
     Standardize function for PRI_jet_num is 1
     Return a standardize version of the original feature, with
-    uselessful thrown away
+    useless features thrown away
     """
     # the features left that are meaningful and useful for training
     feature_left = np.array([0, 1, 2, 3, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 24, 25, 29])
@@ -196,7 +198,7 @@ def standardize_23(x):
     """
     Standardize function for PRI_jet_num is 2 or 3
     Return a standardize version of the original feature, with
-    uselessful thrown away
+    useless features thrown away
     """
     # the features left that are meaningful and useful for training
     feature_left = np.delete(np.arange(30), 22)
@@ -227,7 +229,7 @@ def build_poly(x, degree):
     """
     Build the polynomial rising to the pass in parameter degree.
     Return a matrix that has the same entry as pass in x, while
-    more features added accroding to degree.
+    more features added according to degree.
     Each individual feature is a some power of the original feature.
     """
     matrix = np.zeros((x.shape[0], x.shape[1] * (degree + 1)))
@@ -296,17 +298,17 @@ matrix_std_tx_1 = build_poly(std_tx_1, degree)
 matrix_std_tx_23 = build_poly(std_tx_23, degree)
 
 # Perform Regularized logistic regression dataset where PRI_jet_num is 0
-print("Traing on feature 22 == 0")
+print("Training on feature 22 == 0")
 weights_0 = reg_logistic_regression(y_0, matrix_std_tx_0, lambdas[0], gammas[0], max_iter)
 print("Done")
 
 # Perform Regularized logistic regression dataset where PRI_jet_num is 1
-print("Traing on feature 22 == 1")
+print("Training on feature 22 == 1")
 weights_1 = reg_logistic_regression(y_1, matrix_std_tx_1, lambdas[0], gammas[0], max_iter)
 print("Done")
 
 # Perform Regularized logistic regression dataset where PRI_jet_num is 2 or 3
-print("Traing on feature 22 == 2 or 3")
+print("Training on feature 22 == 2 or 3")
 weights_23 = reg_logistic_regression(y_23, matrix_std_tx_23, lambdas[0], gammas[0], max_iter)
 print("Done")
 
@@ -331,7 +333,7 @@ _, tX_test, ids_test = load_csv_data(DATA_TEST_PATH)
 i_0_test, i_1_test, i_23_test = split_dataset_wrt22(tX_test)
 print("Done")
 
-# Preprocess the test data with the same method as training data
+# Pre-process the test data with the same method as training data
 
 # split tx into 3 set
 tx_0_test = tX_test[i_0_test]
@@ -362,7 +364,7 @@ y_pred_23 = predict_labels(weights_23, build_poly(std_tx_23_test, degree))
 y_pred = np.concatenate((y_pred_0, y_pred_1, y_pred_23), axis=0)
 ids_test = np.concatenate((ids_0_test, ids_1_test, ids_23_test), axis=0)
 
-# Generate predictions and save ouput in csv format for submission:
+# Generate predictions and save output in csv format for submission:
 print("Output to CSV...")
 create_csv_submission(ids_test, y_pred, OUTPUT_PATH)
 print("Done")
